@@ -12,23 +12,24 @@ char *str_concat(char *s1, char *s2)
 {
 	char *str_cat;
 	unsigned int num1, num2, num3, end;
-	
+
 	if (s1 == NULL)
 		s1 = "";  /* empty string */
-	
+
 	if (s2 == NULL)
 		s2 = "";
-	
+
 	/* iterate through string 1 */
 	for (num1 = 0; s1[num1] != '\0'; num1++)
 		;
-	
+
 	/* iterate through string 2 */
-	for (num2 = 0; s2[num2] != '\0'; num2++)						;
-	
+	for (num2 = 0; s2[num2] != '\0'; num2++)
+		;
+
 	/* allocate memory for str_cat */
 	str_cat = malloc(sizeof(char) * (num1 + num2 + 1));
-	
+
 	if (str_cat == NULL)
 	{
 		free(str_cat);
