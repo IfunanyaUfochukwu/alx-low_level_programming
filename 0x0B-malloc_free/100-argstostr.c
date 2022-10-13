@@ -28,23 +28,22 @@ char *argstostr(int ac, char **av)
 
 	if (array_out == NULL)
 	{
-	free(array_out);
-	return (NULL);
+		free(array_out);
+		return (NULL);
 
-	for (num2 = num3 = num4 = 0; num4 < num1; num3++, num4++)
-	{
-	if (av[num2][num3] == '\0')
-	{
-	array_out[num4] = '\n';
-	num2++;
-	num4++;
-	num3 = 0;
-	}
-	if (num4 < num1 - 1)
-		array_out[num4] = av[num2][num3];
-	}
-	array_out[num4] = '\0';
-
-	return (array_out);
+		for (num2 = num3 = num4 = 0; num4 < num1; num3++, num4++)
+		{
+			if (av[num2][num3] == '\0')
+			{
+				array_out[num4] = '\n';
+				num2++;
+				num4++;
+				num3 = 0;
+			}
+			if (num4 < num1 - 1)
+				array_out[num4] = av[num2][num3];
+		}
+		array_out[num4] = '\0';
+		return (array_out);
 	}
 }
