@@ -46,4 +46,3 @@ char *argstostr(int ac, char **av)
 		array_out[num4] = '\0';
 		return (array_out);
 	}
-}
