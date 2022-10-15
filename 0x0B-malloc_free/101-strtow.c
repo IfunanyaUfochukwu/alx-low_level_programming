@@ -2,78 +2,66 @@
 #include <stdlib.h>
 
 /**
- * count_word - function to count the number of words in string
- * @str: string
- * Return: number of words
+ * ch_free_grid - frees a 2 dimensional array.
+ * @grid: multidimensional array of char.
+ * @height: height of the array.
+ *
+ * Return: no return
  */
-
-int count_word(char *str)
+void ch_free_grid(char **grid, unsigned int height)
 {
-	int flag, num, words;
-
-	flag = 0;
-	words = 0;
-
-	/* iterate through source string */
-	for (num = 0; str[num] != '\0'; num++)
+	if (grid != NULL && height != 0)
 	{
-		if (str[num] == ' ')
-			flag = 0;
-		else if (flag == 0)
-		{
-			flag = 1;
-			words++;
-		}
+		for (; height > 0; height--)
+			free(grid[height]);
+		free(grid[height]);
+		free(grid);
 	}
-
-		return (words);
 }
 
 /**
- * strtow - splits a string into words
- * @str: string to split
- * Return: pointer to array of strings (success)
- * or NULL (error)
+ * strtow - splits a string into words.
+ * @str: string.
+ *
+ * Return: pointer of an array of integers
  */
-
 char **strtow(char *str)
 {
-	char **matrix, *tmp;
-	int i, k = 0, len = 0, words, c = 0, start, end;
+	char **aout;
+	unsigned int c, height, i, j, a1;
 
-	while (*(str + len))
-		len++;
-
-	words = count_word(str);
-	if (words == 0)
+	if (str == NULL || *str == '\0')
 		return (NULL);
-
-	matrix = (char **) malloc(sizeof(char *) * (words + 1));
-		if (matrix == NULL)
-			return (NULL);
-	for (i = 0; i <= len; i++)
+	for (c = height = 0; str[c] != '\0'; c++)
+		if (str[c] != ' ' && (str[c + 1] == ' ' || str[c + 1] == '\0'))
+			height++;
+	aout = malloc((height + 1) * sizeof(char *));
+	if (aout == NULL || height == 0)
 	{
-		if (str[i] == ' ' || str[i] == '\0')
+		free(aout);
+		return (NULL);
+	}
+	for (i = a1 = 0; i < height; i++)
+	{
+		for (c = a1; str[c] != '\0'; c++)
 		{
-			if (c)
+			if (str[c] == ' ')
+				a1++;
+			if (str[c] != ' ' && (str[c + 1] == ' ' || str[c + 1] == '\0'))
 			{
-				end = i;
-				tmp = (char *) malloc(sizeof(char) * (c + 1));
-				if (tmp == NULL)
+				aout[i] = malloc((c - a1 + 2) * sizeof(char));
+				if (aout[i] == NULL)
+				{
+					ch_free_grid(aout, i);
 					return (NULL);
-				while (start < end)
-					*tmp++ = str[start++];
-				tmp = '\0';
-				matrix[k] = tmp - c;
-				k++;
-				c = 0;
+				}
+				break;
 			}
 		}
-		else if (c++ == 0)
-			start = i;
+		for (j = 0; a1 <= c; a1++, j++)
+			aout[i][j] = str[a1];
+		aout[i][j] = '\0';
 	}
-
-	matrix[k] = NULL;
-
-	return (matrix);
+	aout[i] = NULL;
+	return (aout);
 }
